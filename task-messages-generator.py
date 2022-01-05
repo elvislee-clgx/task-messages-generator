@@ -1,18 +1,21 @@
 import os
 import sys
 
+# Enter 1.environment 2. pipeline name 3. Absolute path to local repo
 env = sys.argv[1].lower()
 pipeline_name = sys.argv[2].strip().lower().replace(' ', '-')
-gcs_config_file_path = ''
-doc_str = ''
+local_repo_folder_path = sys.argv[3].strip() + '/idap-kafka-to-scdf-task-launcher'
+repo_git_folder = sys.argv[3].strip() + '/.git'
 
 if env == 'dev':
     gcs_config_file_path = "gs://idap-dev-aux-scripts-infrastructure-data/test/enriched/dataflow-bigquery-elastic/config/{pipeline_name}/{env}".format(env=env, pipeline_name=pipeline_name)
-    read_file = open('idap-kafka-to-scdf-task-launcher-dev-west.yml', 'r')
+    read_file = open(local_repo_folder_path + '/idap-kafka-to-scdf-task-launcher-dev-west.yml', 'r')
+    write_file = open(local_repo_folder_path + '/idap-kafka-to-scdf-task-launcher-dev-west.yml', 'w')
 
 elif env == 'int':
     gcs_config_file_path = "gs://idap-preprod-aux-scripts-infrastructure-data/int/enriched/dataflow-bigquery-elastic/config/{pipeline_name}/{env}".format(env=env, pipeline_name=pipeline_name)
-    read_file = open('idap-kafka-to-scdf-task-launcher-int-west.yml', 'r')
+    read_file = open(local_repo_folder_path + '/idap-kafka-to-scdf-task-launcher-int-west.yml', 'r')
+    write_file = open(local_repo_folder_path + '/idap-kafka-to-scdf-task-launcher-int-west.yml', 'w')
 
 doc_str = read_file.read()
 read_file.close()
@@ -30,11 +33,8 @@ insert_position = doc_str.find("\"[AVM snapshot completed FULL]\":")
 
 doc_add_task_message = doc_str[:insert_position] + new_task_message + doc_str[insert_position:]
 
-if env == 'dev':
-    write_file = open('idap-kafka-to-scdf-task-launcher-dev-west2.yml', 'w')
-elif env == 'int':
-    write_file = open('idap-kafka-to-scdf-task-launcher-int-west2.yml', 'w')
-
 write_file.write(doc_add_task_message)
 write_file.close()
+
+os.system('python3 gitpython-push.py {repo_git_folder} {pipeline_name}'.format(repo_git_folder=repo_git_folder, pipeline_name=pipeline_name))
 

@@ -4,7 +4,7 @@ import sys
 # Use the path to your local .git folder
 PATH_OF_GIT_REPO = sys.argv[1]
 
-COMMIT_MESSAGE = 'test the 12th commit'
+COMMIT_MESSAGE = sys.argv[2]
 
 def git_push():
     try:
@@ -14,7 +14,7 @@ def git_push():
 
         origin = repo.remote(name='origin')
         origin.push()
-        print('A new commit "{}" is pushed successfully!'.format(COMMIT_MESSAGE))
+        print('A new task message {} is created successfully!'.format(COMMIT_MESSAGE))
 
     except:
         print('Some error occurred while pushing the code')
