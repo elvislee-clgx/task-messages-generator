@@ -50,4 +50,4 @@ def generate_task_message(env, pipeline_name, repo_path, username, password):
     os.system('cf restart idap-kafka-to-scdf-task-launcher')
 
 # Parameters: 1.environment 2. pipeline name 3. the absolute path to local repo 4. PCF username 5. PCF password
-generate_task_message('int', 'test-dummy-job4', '/Users/polee/IdeaProjects/dummy-idap-dataapi-cloud-config', '', '')
+generate_task_message('dev', 'test-dummy-job2', '/Users/polee/IdeaProjects/dummy-idap-dataapi-cloud-config', '', '')
