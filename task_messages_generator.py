@@ -49,5 +49,5 @@ def generate_task_message(env, pipeline_name, repo_path, username, password):
     os.system('cf login -a {pcf_url} -u {username} -p {password} -o {pcf_org} -s Dataloading'.format(pcf_url=pcf_url, username=username, password=password, pcf_org=pcf_org))
     os.system('cf restart idap-kafka-to-scdf-task-launcher')
 
-# Parameters: 1.environment 2. pipeline name 3. the absolute path to local repo
-generate_task_message('int', 'test-dummy-job4', '/Users/polee/IdeaProjects/dummy-idap-dataapi-cloud-config', 'polee@corelogic.com', 'HopeFuture#2911')
+# Parameters: 1.environment 2. pipeline name 3. the absolute path to local repo 4. PCF username 5. PCF password
+generate_task_message('int', 'test-dummy-job4', '/Users/polee/IdeaProjects/dummy-idap-dataapi-cloud-config', '', '')
