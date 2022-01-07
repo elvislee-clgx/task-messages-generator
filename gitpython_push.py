@@ -12,4 +12,4 @@ def git_push(git_repo_path, env, pipeline_title):
         print('A new task message [{pipeline_title}] in {env} is created successfully!'.format(env=env.upper(),pipeline_title=pipeline_title))
 
     except:
-        print('Some error occurred while pushing the code')
+        print('Some errors occurred while pushing the code')
